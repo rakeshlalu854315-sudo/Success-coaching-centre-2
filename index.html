@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Success Coaching Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1565C0;
+      --blue-dark: #0D47A1;
+      --blue-light: #1976D2;
+      --gold: #FFC107;
+      --orange: #E65100;
+      --green: #2E7D32;
+      --teal: #00796B;
+      --red: #C62828;
+      --white: #ffffff;
+      --bg: #EEF2F7;
+      --card-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== PHONE FRAME ===== */
+    .phone {
+      width: 360px;
+      height: 720px;
+      background: white;
+      border-radius: 40px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 0 8px #222, 0 0 0 10px #555;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen {
+      position: absolute;
+      inset: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.97);
+    }
+
+    /* ===== SPLASH ===== */
+    #splash {
+      background: linear-gradient(160deg, #1565C0 0%, #0D47A1 50%, #1a237e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    #splash::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      top: -200px; left: -100px;
+    }
+    #splash::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      bottom: -80px; right: -80px;
+    }
+    .splash-logo {
+      animation: popIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    .splash-logo svg {
+      width: 130px; height: 130px;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+    }
+    .splash-title {
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-align: center;
+      line-height: 1.1;
+      animation: fadeUp 0.8s 0.3s both;
+    }
+    .splash-subtitle {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: fadeUp 0.8s 0.5s both;
+    }
+    .splash-dots {
+      display: flex; gap: 8px;
+      animation: fadeUp 0.8s 0.7s both;
+      margin-top: 20px;
+    }
+    .splash-dots span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      animation: pulse 1.5s infinite;
+    }
+    .splash-dots span:nth-child(1) { animation-delay: 0s; background: white; }
+    .splash-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .splash-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    /* ===== HOME ===== */
+    #home {
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    /* Top bar */
+    .topbar {
+      background: var(--blue);
+      padding: 14px 16px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 10px; }
+    .topbar-logo {
+      background: white;
+      border-radius: 10px;
+      padding: 5px 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .topbar-logo svg { width: 22px; height: 22px; }
+    .topbar-logo span {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      color: var(--blue);
+      line-height: 1.1;
+    }
+    .hamburger { color: white; cursor: pointer; font-size: 22px; }
+    .bell { color: white; font-size: 20px; cursor: pointer; }
+
+    /* Banner */
+    .banner {
+      background: linear-gradient(135deg, var(--blue) 0%, #1a237e 100%);
+      padding: 22px 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .banner h2 {
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .banner p {
+      color: rgba(255,255,255,0.8);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Grid */
+    .grid-section {
+      padding: 20px 16px 8px;
+      flex-shrink: 0;
+    }
+    .grid-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .grid-card {
+      border-radius: 18px;
+      padding: 22px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .grid-card::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+    }
+    .grid-card:active { transform: scale(0.96); }
+    .grid-card.notes    { background: linear-gradient(135deg, #FF8C00, #E65100); }
+    .grid-card.tests    { background: linear-gradient(135deg, #F44336, #C62828); }
+    .grid-card.video    { background: linear-gradient(135deg, #1565C0, #0D47A1); }
+    .grid-card.results  { background: linear-gradient(135deg, #00796B, #004D40); }
+
+    .grid-card svg { width: 40px; height: 40px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)); }
+    .grid-card span {
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Notice */
+    .notice-section {
+      padding: 4px 16px 16px;
+      flex-shrink: 0;
+    }
+    .notice-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .notice-card {
+      background: white;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      margin-bottom: 10px;
+    }
+    .notice-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .notice-card p { font-size: 13px; color: #444; font-weight: 600; }
+    .notice-card small { font-size: 11px; color: #999; }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      background: white;
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      flex-shrink: 0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0 8px;
+      cursor: pointer;
+      gap: 3px;
+    }
+    .nav-item svg { width: 22px; height: 22px; }
+    .nav-item span { font-size: 10px; font-weight: 700; color: #999; }
+    .nav-item.active svg path, .nav-item.active svg rect, .nav-item.active svg circle { fill: var(--blue); }
+    .nav-item.active span { color: var(--blue); }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.3); }
+    }
+    .home-enter {
+      animation: fadeUp 0.5s ease both;
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- SPLASH SCREEN -->
+  <div class="screen" id="splash">
+    <div class="splash-logo">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Book -->
+        <ellipse cx="50" cy="72" rx="38" ry="8" fill="rgba(255,255,255,0.2)"/>
+        <path d="M12 35 Q50 20 88 35 L88 72 Q50 58 12 72 Z" fill="white" opacity="0.9"/>
+        <path d="M50 20 L50 72" stroke="rgba(255,193,7,0.8)" stroke-width="2"/>
+        <!-- Cap -->
+        <rect x="28" y="18" width="44" height="5" rx="2" fill="#FFC107"/>
+        <polygon points="50,5 22,20 78,20" fill="#FFC107"/>
+        <line x1="78" y1="20" x2="82" y2="32" stroke="#FFC107" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="82" cy="34" r="4" fill="#FFC107"/>
+      </svg>
+    </div>
+    <div class="splash-title">SUCCESS<br>COACHING CENTER</div>
+    <div class="splash-subtitle">Start Learning Today</div>
+    <div class="splash-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="screen hidden" id="home">
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div style="color:white;font-size:22px;cursor:pointer;">☰</div>
+      <div class="topbar-logo">
+        <svg viewBox="0 0 30 30" fill="none">
+          <path d="M5 10 Q15 4 25 10 L25 22 Q15 16 5 22 Z" fill="#1565C0"/>
+          <polygon points="15,2 4,10 26,10" fill="#FFC107"/>
+        </svg>
+        <span>SUCCESS<br>COACHING</span>
+      </div>
+      <div style="color:white;font-size:20px;cursor:pointer;">🔔</div>
+    </div>
+
+    <!-- Banner -->
+    <div class="banner home-enter">
+      <h2>Welcome to SUCCESS COACHING</h2>
+      <p>Start Learning Today</p>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid-section home-enter" style="animation-delay:0.1s">
+      <h3>Quick Access</h3>
+      <div class="grid">
+        <div class="grid-card notes">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="6" y="4" width="28" height="32" rx="4" fill="white" opacity="0.9"/>
+            <rect x="10" y="10" width="20" height="2.5" rx="1.2" fill="#E65100"/>
+            <rect x="10" y="16" width="20" height="2.5" rx="1.2" fill="#E65100"/>
+            <rect x="10" y="22" width="14" height="2.5" rx="1.2" fill="#E65100"/>
+          </svg>
+          <span>Notes</span>
+        </div>
+        <div class="grid-card tests">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="6" y="4" width="28" height="32" rx="4" fill="white" opacity="0.9"/>
+            <path d="M12 14 L18 20 L28 10" stroke="#C62828" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="10" y="24" width="20" height="2.5" rx="1.2" fill="#C62828"/>
+            <rect x="10" y="29" width="14" height="2.5" rx="1.2" fill="#C62828"/>
+          </svg>
+          <span>Tests</span>
+        </div>
+        <div class="grid-card video">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="8" width="26" height="20" rx="4" fill="white" opacity="0.9"/>
+            <polygon points="14,14 14,22 22,18" fill="#1565C0"/>
+            <path d="M30 13 L36 10 L36 26 L30 23" fill="white" opacity="0.9"/>
+          </svg>
+          <span>Video Classes</span>
+        </div>
+        <div class="grid-card results">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="6" y="22" width="6" height="14" rx="2" fill="white" opacity="0.9"/>
+            <rect x="15" y="14" width="6" height="22" rx="2" fill="white" opacity="0.7"/>
+            <rect x="24" y="6" width="6" height="30" rx="2" fill="white"/>
+            <path d="M8 18 L17 12 L26 6" stroke="#FFC107" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span>Results</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notices -->
+    <div class="notice-section home-enter" style="animation-delay:0.2s">
+      <h3>Latest Updates</h3>
+      <div class="notice-card">
+        <div class="notice-dot" style="background:#1565C0"></div>
+        <div>
+          <p>Math Chapter 4 Notes Uploaded</p>
+          <small>Today, 9:00 AM</small>
+        </div>
+      </div>
+      <div class="notice-card">
+        <div class="notice-dot" style="background:#E65100"></div>
+        <div>
+          <p>Science Test on Monday</p>
+          <small>Apr 28, 10:00 AM</small>
+        </div>
+      </div>
+      <div class="notice-card">
+        <div class="notice-dot" style="background:#2E7D32"></div>
+        <div>
+          <p>New Video: English Grammar</p>
+          <small>Yesterday, 5:30 PM</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav" style="margin-top:auto;">
+      <div class="nav-item active">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z" fill="#1565C0"/></svg>
+        <span style="color:var(--blue)">Home</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5" fill="#999"/><rect x="13" y="3" width="8" height="8" rx="1.5" fill="#999"/><rect x="3" y="13" width="8" height="8" rx="1.5" fill="#999"/><rect x="13" y="13" width="8" height="8" rx="1.5" fill="#999"/></svg>
+        <span>Subjects</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#999"/><path d="M8 8h8M8 12h8M8 16h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Tests</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="#999"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="#999"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Auto-transition splash → home after 2.8s
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hidden');
+    const home = document.getElementById('home');
+    home.classList.remove('hidden');
+  }, 2800);
+</script>
+</body>
+</html>
